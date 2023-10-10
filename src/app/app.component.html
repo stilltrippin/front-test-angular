@@ -1,0 +1,66 @@
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <title>Document</title>
+</head>
+<body>
+
+    <div class="container form-group"  [formGroup]="formGroup" style="margin: 50px 100px;">
+
+      <div class="row" style="margin-bottom: 50px;">
+        <div style="display: flex;">
+          <h2>Дата:</h2>
+          <input style="border-radius:5px;padding: 3px 15px;margin: 0 20px;width: 150px;"
+                 formControlName="date"
+                 type="date"
+                 (blur)="resetDate()" >
+        </div>
+      </div>
+
+      <div class="row">
+        <h2>Діагнози за ІСРС-2</h2>
+        <div formArrayName="illnesses" >
+          <div *ngFor="let ill of illnesses.controls; let k = index;" >
+            <div [formGroupName]="k">
+              <div style="display: flex; gap: 50px; padding: 5px 5px;" class="btn-group">
+                <select  style="width: 45%;" formControlName="name" >
+                  <option selected>---Select---</option>
+                  <option  *ngFor="let item of illnessList;" [value]="item.name">
+                   {{item.code}} {{item.name}}
+                  </option>
+                </select>
+                <input type="text"
+                       class="form-control"
+                       style="width: 40%;"
+                       formControlName = "comment"
+                       placeholder="Comments">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div style="padding: 20px 10px;">
+        <button class="btn btn-primary"
+                style="border: none;background: white;color: deepskyblue;"
+                (click)="addIllness()">+ додати ще</button>
+      </div>
+      <div style="margin-top: 50px;">
+        <h4>JSON:</h4>
+        <button class="btn btn-primary"
+                style="width: 90%;background: white;color: deepskyblue;border: 2px solid deepskyblue;"
+                (click)="createJSON()">Створити JSON</button>
+      </div>
+      <div style="padding: 10px 0;">
+        <textarea class="form-control"
+                  formControlName="output"
+                  style="width: 90%;height: 150px;">
+        </textarea>
+      </div>
+    </div>
+</body>
+</html>
